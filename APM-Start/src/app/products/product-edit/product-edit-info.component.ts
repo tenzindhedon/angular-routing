@@ -2,20 +2,50 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
+import { MessageService } from '../../messages/message.service';
+
 import { Product } from '../product';
+import { ProductService } from '../product.service';
 
 @Component({
   templateUrl: './product-edit-info.component.html'
 })
 export class ProductEditInfoComponent implements OnInit {
-  @ViewChild(NgForm, {static: false}) productForm: NgForm;
+  pageTitle = 'Product Edit';
+  @ViewChild(NgForm, {static: false}) 
+  productForm: NgForm;
 
   errorMessage: string;
   product = { id: 1, productName: 'test', productCode: 'test', description: 'test' };
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private productService: ProductService,
+    private messageService: MessageService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    
+    this.route.paramMap.subscribe(
+      params => {
+        const id = +params.get('id');
+        this.getProduct(id);
+      }
+    )
+  }
+
+  getProduct(id: number): void {
+    this.productService.getProduct(id).subscribe({
+      next: product => this.onProductRetrieved(product),
+      error: err => this.errorMessage = err
+    });
+  }
+  
+  onProductRetrieved(product: Product): void {
+    this.product = product;
+
+    if (this.product) {
+      this.pageTitle = `Product Edit: ${this.product.productName}`;
+    } else {
+      this.pageTitle = 'No product found';
+    }
   }
 }
