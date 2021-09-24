@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { ProductModule } from './products/product.module';
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
+import { ProductDetailComponent } from './products/product-detail.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { MessageModule } from './messages/message.module';
     RouterModule.forRoot([
       {path:'welcome', component: WelcomeComponent},
       {path:'', redirectTo:'welcome', pathMatch:'full'},
+      // {path:'product-list', component:ProductDetailComponent},
       {path:'**', component:PageNotFoundComponent}
     ]),
     ProductModule,
