@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 
 // import { MessageService } from '../../messages/message.service';
 
-import { Product, ProductResolved } from '../product';
+import { Product } from '../product';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class ProductEditInfoComponent implements OnInit {
   productForm: NgForm;
 
   errorMessage: string;
-  product = { id: 1, productName: 'test', productCode: 'test', description: 'test' };
+  product: Product;
 
   constructor(
     private productService: ProductService,
@@ -26,18 +26,12 @@ export class ProductEditInfoComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(
-      data => {
-        // const id = +params.get('id');
-        // this.getProduct(id);
-        const resolvedData: ProductResolved =
-          data["resolvedData"];
-        this.errorMessage = resolvedData.error;
-        this.onProductRetrieved(resolvedData.product);
+    this.route.parent.data.subscribe(data => {
+      if (this.productForm) {
+        this.productForm.reset();
       }
-    )
-
-    
+      this.product = data["resolvedData"].product;
+    })
   }
 
   // getProduct(id: number): void {
