@@ -36,6 +36,7 @@
     <li class="nav-item" *ngIf="isLoggedIn"><a class="nav-link" [routerLink]="['/logout']">Log Out</a></li>
   </ul>
 </nav>
-<div class="container">
-  <router-outlet></router-outlet>
+<div class="container"
+  [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''">
+  <router-outlet #o="outlet"></router-outlet>
 </div>
