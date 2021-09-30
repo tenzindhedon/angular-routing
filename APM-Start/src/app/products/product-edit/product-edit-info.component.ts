@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 // import { MessageService } from '../../messages/message.service';
 
 import { Product, ProductResolved } from '../product';
-// import { ProductService } from '../product.service';
+import { ProductService } from '../product.service';
 
 @Component({
   templateUrl: './product-edit-info.component.html'
@@ -19,7 +19,7 @@ export class ProductEditInfoComponent implements OnInit {
   product = { id: 1, productName: 'test', productCode: 'test', description: 'test' };
 
   constructor(
-    // private productService: ProductService,
+    private productService: ProductService,
     // private messageService: MessageService,
     private route: ActivatedRoute,
     // private router: Router
